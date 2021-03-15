@@ -15,12 +15,31 @@ const onclickAdd = () => {
   const completeButton = document.createElement("button");
   completeButton.innerText = "完了";
   completeButton.addEventListener("click", () => {
-    // 完了リストに追加
-    const addTarget = completeButton.parentNode;
-    const text = addTarget.firstElementChild.innerText;
-
     // 押された完了ボタンの親タグを削除
     deleteFromIncompleteList(completeButton.parentNode);
+
+    // 完了ボタンの親要素を取得
+    const addTarget = completeButton.parentNode;
+
+    // 取得した親要素の子要素のテキストを取得
+    const text = addTarget.firstElementChild.innerText;
+
+    // div以下を初期化
+    addTarget.textContent = null;
+
+    // liタグの生成
+    document.createElement("li");
+    li.innerText = text;
+
+    // 戻すボタン
+    const backButton = document.createElement("button");
+    backButton.innerText = "戻す";
+
+    // divの子要素に各要素を追加
+    div.appendChild(li);
+    div.appendChild(backButton);
+
+    document.getElementById("complete-list").appendChild(addTarget);
   });
 
   // 削除ボタン
