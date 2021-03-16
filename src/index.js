@@ -4,12 +4,24 @@ const onclickAdd = () => {
   // Textboxの値を初期化し、値を初期化する
   const inputText = document.getElementById("add-text").value;
   document.getElementById("add-text").value = "";
+
+  createIncompleteList(inputText);
+};
+
+// 未完了リストから指定の要素を削除する
+const deleteFromIncompleteList = (target) => {
+  document.getElementById("incomplete-list").removeChild(target);
+};
+
+// 未完了リストに追加する関数
+const createIncompleteList = (text) => {
   // divの生成
   const div = document.createElement("div");
   div.className = "list-row";
+
   // listの生成
   const li = document.createElement("li");
-  li.innerText = inputText;
+  li.innerText = text;
 
   // 完了ボタン
   const completeButton = document.createElement("button");
@@ -28,17 +40,26 @@ const onclickAdd = () => {
     addTarget.textContent = null;
 
     // liタグの生成
-    document.createElement("li");
+    const li = document.createElement("li");
     li.innerText = text;
 
-    // 戻すボタン
+    // buttonタグの生成
     const backButton = document.createElement("button");
     backButton.innerText = "戻す";
+    backButton.addEventListener("click", () => {
+      // 押されたボタンの親タグを完了リストから削除
+      const deleteTarget = backButton.parentNode;
+      document.getElementById("complete-list").removeChild(deleteTarget);
 
+      // テキストを取得
+      const text = backButton.parentNode.firstElementChild.innerText;
+      createIncompleteList(text);
+    });
     // divの子要素に各要素を追加
     div.appendChild(li);
     div.appendChild(backButton);
 
+    // 完了リストに追加
     document.getElementById("complete-list").appendChild(addTarget);
   });
 
@@ -50,16 +71,13 @@ const onclickAdd = () => {
     deleteFromIncompleteList(deleteButton.parentNode);
   });
 
-  // 未完了リストに追加
-  document.getElementById("incomplete-list").appendChild(div);
+  // divタグの子要素に各要素を設定
   div.appendChild(li);
   div.appendChild(completeButton);
   div.appendChild(deleteButton);
-};
 
-// 未完了リストから指定の要素を削除する
-const deleteFromIncompleteList = (target) => {
-  document.getElementById("incomplete-list").removeChild(target);
+  // 未完了リストに追加
+  document.getElementById("incomplete-list").appendChild(div);
 };
 
 // divの子要素にliを入れる
